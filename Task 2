@@ -1,0 +1,92 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeManager {
+    
+    // Store student grades
+    private ArrayList<Double> grades;
+
+    // Constructor to initialize the grade list
+    public StudentGradeManager() {
+        grades = new ArrayList<>();
+    }
+
+    // Method to add a grade
+    public void addGrade(double grade) {
+        grades.add(grade);
+    }
+
+    // Method to calculate the average grade
+    public double calculateAverage() {
+        double total = 0;
+        for (double grade : grades) {
+            total += grade;
+        }
+        return total / grades.size();
+    }
+
+    // Method to determine letter grade
+    public String getLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    // Method to calculate GPA
+    public double calculateGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentGradeManager manager = new StudentGradeManager();
+        String continueInput;
+
+        System.out.println("Welcome to the Student Grade Tracker!");
+
+        // Input grades
+        do {
+            System.out.print("Enter the grade for an assignment (0-100): ");
+            double grade = scanner.nextDouble();
+            if (grade < 0 || grade > 100) {
+                System.out.println("Invalid grade. Please enter a number between 0 and 100.");
+            } else {
+                manager.addGrade(grade);
+            }
+
+            System.out.print("Do you want to enter another grade? (yes/no): ");
+            continueInput = scanner.next();
+        } while (continueInput.equalsIgnoreCase("yes"));
+
+        // Calculate average and display results
+        double average = manager.calculateAverage();
+        String letterGrade = manager.getLetterGrade(average);
+        double gpa = manager.calculateGPA(average);
+
+        System.out.println("\n--- Grade Report ---");
+        System.out.printf("Average Grade: %.2f\n", average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.printf("GPA: %.2f\n", gpa);
+        
+        scanner.close();
+    }
+}
